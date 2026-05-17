@@ -1,0 +1,31 @@
+<view class="container">
+  <scroll-view class="chat-area" scroll-y scroll-top="{{scrollTop}}" scroll-into-view="{{toView}}">
+    <view wx:for="{{chatList}}" wx:key="index" class="chat-item {{item.role === 'user' ? 'user-item' : 'assistant-item'}}">
+      <view class="avatar {{item.role === 'user' ? 'user-avatar' : 'assistant-avatar'}}">
+        {{item.role === 'user' ? '我' : '小安'}}
+      </view>
+      <view class="bubble {{item.role === 'user' ? 'user-bubble' : 'assistant-bubble'}}">
+        <text>{{item.content}}</text>
+      </view>
+    </view>
+    <view wx:if="{{isLoading}}" class="chat-item assistant-item">
+      <view class="avatar assistant-avatar">小安</view>
+      <view class="bubble assistant-bubble">
+        <text>正在思考中...</text>
+      </view>
+    </view>
+    <view id="bottom"></view>
+  </scroll-view>
+
+  <view class="input-area">
+    <input 
+      class="input-box" 
+      placeholder="输入你的问题..." 
+      value="{{inputText}}" 
+      bindinput="onInputChange"
+      bindconfirm="sendQuery"
+      disabled="{{isLoading}}"
+    />
+    <button class="send-btn" bindtap="sendQuery" disabled="{{isLoading || !inputText}}">发送</button>
+  </view>
+</view>

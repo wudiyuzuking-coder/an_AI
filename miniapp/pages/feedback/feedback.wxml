@@ -1,0 +1,19 @@
+<view class="container">
+  <view class="title-bar">食堂意见与投诉反馈</view>
+  
+  <view class="form-group">
+    <textarea 
+      model:value="{{feedbackContent}}" 
+      placeholder="请详细描述您遇到的问题（例如：二食堂的红烧肉没熟、打菜阿姨态度不好、菜价太贵等）..." 
+      maxlength="500">
+    </textarea>
+  </view>
+
+  <button class="submit-btn" loading="{{isSubmitting}}" bindtap="submitFeedback">提交反馈</button>
+
+  <view class="result-card" wx:if="{{resultMessage}}">
+    <icon type="success" size="30"></icon>
+    <view class="result-text">{{resultMessage}}</view>
+    <view class="badge">系统自动分类：{{categoryTag}}</view>
+  </view>
+</view>

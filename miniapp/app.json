@@ -1,0 +1,32 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/feedback/feedback"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#4CAF50",
+    "navigationBarTitleText": "校园食堂 AI 助手",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#999",
+    "selectedColor": "#4CAF50",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "智能问答",
+        "iconPath": "images/chat.png",
+        "selectedIconPath": "images/chat-active.png"
+      },
+      {
+        "pagePath": "pages/feedback/feedback",
+        "text": "意见反馈",
+        "iconPath": "images/feedback.png",
+        "selectedIconPath": "images/feedback-active.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

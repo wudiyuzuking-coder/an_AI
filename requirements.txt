@@ -1,0 +1,6 @@
+flask
+fastapi
+langchain
+chromadb
+sentence-transformers
+uvicorn
