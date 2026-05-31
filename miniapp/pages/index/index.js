@@ -22,7 +22,7 @@ Page({
     });
 
     wx.request({
-      url: 'http://127.0.0.1:8080/api/chat',
+      url: 'http://172.20.10.7:8080/api/chat',
       method: 'POST',
       data: { question: query },
       header: { 'content-type': 'application/json' },

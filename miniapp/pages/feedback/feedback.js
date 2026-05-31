@@ -16,7 +16,7 @@ Page({
     this.setData({ isSubmitting: true, resultMessage: '' });
 
     wx.request({
-      url: 'http://127.0.0.1:8080/api/feedback',
+      url: 'http://172.20.10.7:8080/api/feedback',
       method: 'POST',
       data: { content: content },
       header: { 'content-type': 'application/json' },

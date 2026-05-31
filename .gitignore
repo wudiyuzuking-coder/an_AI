@@ -14,3 +14,6 @@ backend/.cache/
 # 忽略本地向量数据库
 **/chroma_db/
 *.sqlite3
+
+# 确保项目根目录下的独立模型文件夹也被忽略
+models/

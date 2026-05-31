@@ -12,7 +12,7 @@
 |---|---|
 | 前端 | 微信小程序（WXML + WXSS + JavaScript） |
 | 后端 | Python + FastAPI |
-| 大模型 | Qwen3-1.7B（通过 Ollama 本地部署） |
+| 大模型 | Qwen2.5-1.5B-Instruct（Hugging Face Transformers 本地加载） |
 | 向量数据库 | ChromaDB |
 | Embedding模型 | BAAI/bge-small-zh-v1.5 |
 | 文本处理 | LangChain |
@@ -27,7 +27,7 @@ an_AI/
 ├── backend/                  # Python后端
 │   ├── app.py                # FastAPI主服务
 │   ├── model/
-│   │   └── llm_client.py     # Ollama大模型客户端
+│   │   └── llm_client.py     # Transformers大模型客户端（单例模式）
 │   ├── prompt/
 │   │   └── templates.py      # Prompt模板
 │   ├── rag/
@@ -52,6 +52,9 @@ an_AI/
 │           ├── feedback.wxml
 │           ├── feedback.wxss
 │           └── feedback.json
+│
+├── models/                   # 本地大模型文件
+│   └── Qwen2.5-1.5B-Instruct/
 │
 ├── database/
 │   ├── canteen_docs/
@@ -81,7 +84,7 @@ an_AI/
 - 文档切分：RecursiveCharacterTextSplitter（按换行符切分，chunk_size=100）
 - 向量化：BGE-small-zh-v1.5 模型
 - 检索：ChromaDB 相似度搜索（k=2）
-- 生成：Qwen3-1.7B，temperature=0.1 控制随机性
+- 生成：Qwen2.5-1.5B-Instruct，temperature=0.1 控制随机性
 - 抗幻觉：严格Prompt限制，不知道就说不知道
 
 ### 2. 反馈提交与自动分类
@@ -113,22 +116,36 @@ an_AI/
 
 ## 快速开始
 
-### 后端启动
+### 1. 安装依赖
 
 ```bash
-# 进入backend目录
-cd backend
+pip install -r requirements.txt
+```
 
+### 2. 下载本地大模型
+
+使用 ModelScope（推荐，国内速度快）：
+
+```bash
+pip install modelscope
+modelscope download --model qwen/Qwen2.5-1.5B-Instruct --local_dir models/Qwen2.5-1.5B-Instruct
+```
+
+### 3. 后端启动
+
+```bash
 # 激活虚拟环境
-venv\Scripts\activate
+.venv\Scripts\activate
 
-# 启动服务
-python app.py
+# 启动服务（默认加载 models/ 目录下的模型）
+python backend/app.py
 ```
 
 服务运行在 http://127.0.0.1:8080
 
-### 小程序联调
+> 如需自定义模型路径，可设置环境变量：`$env:LLM_MODEL_PATH="你的模型路径"`
+
+### 4. 小程序联调
 
 1. 打开微信开发者工具
 2. 导入 `miniapp/` 目录
@@ -153,6 +170,8 @@ python app.py
 
 ## 注意事项
 
-- 确保 Ollama 已安装并下载 qwen3:1.7b 模型
+- 模型使用 Hugging Face Transformers 本地加载，无需 Ollama
 - 首次运行会自动下载 BGE 嵌入模型
 - 模型缓存路径已配置为无中文字符路径
+- 优先使用 CUDA 显卡运行，无显卡时自动回退到 CPU（速度较慢）
+- 可通过环境变量 `LLM_MODEL_PATH` 指定本地模型路径
